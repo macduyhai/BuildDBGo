@@ -1,0 +1,4 @@
+EXPORT:
+sudo docker exec -it mysql-order mysqldump -uroot -pbW90aGVyIGZ1Y2tlciBub29i  orders > backup.sql
+IMPORT
+sudo docker exec -i mysql-order mysqldump -uroot -pbW90aGVyIGZ1Y2tlciBub29i  orders < backup.sql

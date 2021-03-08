@@ -1,0 +1,47 @@
+version: "3.4"
+services:
+  backend:
+    build:
+      context: "./"
+      dockerfile: "./Dockerfile"
+      cache_from:
+        - ubuntu:16.04
+        - golang:1.12
+    depends_on:
+      - mysql
+    image: order-ops-hapyc:v1.0.0
+    restart: always
+    ports:
+      - "8086:80"
+    healthcheck:
+      test: ["CMD", "curl", "-X", "GET", "http://localhost/ping"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    environment:
+      - MYSQL_CONNECT_URL=root:bW90aGVyIGZ1Y2tlciBub29i@tcp(mysql:3306)/orders?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=True&loc=Local
+    networks:
+      - backend_order
+  mysql:
+    image: mysql:5.7
+    restart: always
+    container_name: mysql-order
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - backend_order
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: bW90aGVyIGZ1Y2tlciBub29i
+      MYSQL_DATABASE: orders
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: 1
+volumes:
+  db_data:
+    name: order_mysql
+    external: true
+networks:
+  backend_order:
+    driver: bridge
