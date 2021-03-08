@@ -1,14 +1,16 @@
 package controllers
 
+import "BuildDBGo/services"
+
 const TimeFormatFull = "2006-01-02 15:04:05"
 
-// type Controller struct {
-// 	OrderService       services.OrderService
-// 	BranchSellService  services.BranchSellService
-// 	TypeProductService services.TypeProductService
-// 	SellerService      services.SellerService
-// 	AuthenService      services.AuthenService
-// }
+type Controller struct {
+	UserService services.UserService
+	// BranchSellService  services.BranchSellService
+	// TypeProductService services.TypeProductService
+	// SellerService      services.SellerService
+	// AuthenService      services.AuthenService
+}
 
 // func (c Controller) HealthCheck(contex *gin.Context) {
 // 	contex.JSON(200, gin.H{

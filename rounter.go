@@ -26,14 +26,14 @@ func CORSMiddleWare() gin.HandlerFunc {
 }
 
 func InitGin(db *gorm.DB) *gin.Engine {
-	adScreenDao := daos.NewOrderDao(db)
-	adScreenService := services.NewOrderService(adScreenDao)
+	userDao := daos.NewUserDao(db)
+	userService := services.NewUserService(userDao)
 
 	authenDao := daos.NewAuthenDao(db)
 	authenService := services.NewAuthenService(authenDao)
 
 	ctl := controllers.Controller{
-		AdScreenService: adScreenService,
+		AdScreenService: userService,
 		AuthenService:   authenService,
 	}
 
