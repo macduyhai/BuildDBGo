@@ -1,6 +1,17 @@
 package controllers
 
-import "BuildDBGo/services"
+import (
+	"BuildDBGo/dtos"
+	"BuildDBGo/services"
+	"BuildDBGo/utils"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"time"
+
+	"github.com/gin-gonic/gin"
+)
 
 const TimeFormatFull = "2006-01-02 15:04:05"
 
@@ -9,14 +20,14 @@ type Controller struct {
 	// BranchSellService  services.BranchSellService
 	// TypeProductService services.TypeProductService
 	// SellerService      services.SellerService
-	// AuthenService      services.AuthenService
+	AuthenService services.AuthenService
 }
 
-// func (c Controller) HealthCheck(contex *gin.Context) {
-// 	contex.JSON(200, gin.H{
-// 		"status": "running",
-// 	})
-// }
+func (c Controller) HealthCheck(contex *gin.Context) {
+	contex.JSON(200, gin.H{
+		"status": "running",
+	})
+}
 
 // // ----- Delete method DeleteBranchSell
 
@@ -104,47 +115,74 @@ type Controller struct {
 // 	utils.ResponseSuccess(ctx, nil)
 // }
 
-// // ----- ADD Authen
-// func (c Controller) AddAuthen(ctx *gin.Context) {
+// ----- ADD Authen
+func (c Controller) AddAuthen(ctx *gin.Context) {
 
-// 	// log.Println(ctx.Query("Key"))
-// 	// log.Println(ctx.Query("CreatedAt"))
+	// log.Println(ctx.Query("Key"))
+	// log.Println(ctx.Query("CreatedAt"))
 
-// 	var request dtos.AuthenKey
-// 	// log.Println(ctx.Request.Body)
-// 	// bytes, err := ioutil.ReadAll(ctx.Request.Body)
-// 	// if err != nil {
-// 	// 	fmt.Println("get raw body error", err)
-// 	// 	utils.ResponseErrorGin(ctx, "get raw body error")
-// 	// 	return
-// 	// }
-// 	// log.Println(bytes)
+	var request dtos.AuthenKey
+	// log.Println(ctx.Request.Body)
+	// bytes, err := ioutil.ReadAll(ctx.Request.Body)
+	// if err != nil {
+	// 	fmt.Println("get raw body error", err)
+	// 	utils.ResponseErrorGin(ctx, "get raw body error")
+	// 	return
+	// }
+	// log.Println(bytes)
 
-// 	// err = json.Unmarshal(bytes, &request)
-// 	// if err != nil {
-// 	// 	fmt.Println("bind json error", err, "raw_body", string(bytes))
-// 	// 	utils.ResponseErrorGin(ctx, "bind json error")
-// 	// 	return
-// 	// }
-// 	log.Println(request)
-// 	request.Key = ctx.Query("Key")
-// 	// request.CreatedAt = ctx.Query("CreatedAt")
+	// err = json.Unmarshal(bytes, &request)
+	// if err != nil {
+	// 	fmt.Println("bind json error", err, "raw_body", string(bytes))
+	// 	utils.ResponseErrorGin(ctx, "bind json error")
+	// 	return
+	// }
+	log.Println(request)
+	request.Key = ctx.Query("Key")
+	// request.CreatedAt = ctx.Query("CreatedAt")
 
-// 	t := time.Now()
-// 	t = t.Add(time.Hour * 7)
-// 	request.CreatedAt = &t
+	t := time.Now()
+	t = t.Add(time.Hour * 7)
+	request.CreatedAt = &t
 
-// 	log.Println(request)
-// 	resp, err := c.AuthenService.AddAuthen(request)
-// 	if err != nil {
-// 		fmt.Println("add order error", err)
-// 		utils.ResponseErrorGin(ctx, "add order error")
-// 		return
-// 	}
+	log.Println(request)
+	resp, err := c.AuthenService.AddAuthen(request)
+	if err != nil {
+		fmt.Println("add order error", err)
+		utils.ResponseErrorGin(ctx, "add order error")
+		return
+	}
 
-// 	fmt.Println("add success")
-// 	utils.ResponseSuccess(ctx, resp)
-// }
+	fmt.Println("add success")
+	utils.ResponseSuccess(ctx, resp)
+}
+
+func (c Controller) AddUser(ctx *gin.Context) {
+	var request dtos.AddUserRequest
+	//  var request dtos.AddOrderNewRequest
+	bytes, err := ioutil.ReadAll(ctx.Request.Body)
+	if err != nil {
+		fmt.Println("get raw body ADD ORDER error", err)
+		utils.ResponseErrorGin(ctx, "get raw body error")
+		return
+	}
+
+	err = json.Unmarshal(bytes, &request)
+	if err != nil {
+		fmt.Println("bind json ADD ORDER error", err, "raw_body", string(bytes))
+		utils.ResponseErrorGin(ctx, "bind json error")
+		return
+	}
+	resp, err := c.UserService.AddUser(request)
+	if err != nil {
+		fmt.Println("add order error", err)
+		utils.ResponseErrorGin(ctx, "add order error")
+		return
+	}
+
+	fmt.Println("add success")
+	utils.ResponseSuccess(ctx, resp)
+}
 
 // // ----- ADD METHOD
 // func (c Controller) AddSeller(ctx *gin.Context) {
@@ -218,34 +256,6 @@ type Controller struct {
 // 	}
 // 	// request.BranchSells[0].Name = strings.ToLower(request.BranchSells.Name)
 // 	resp, err := c.BranchSellService.AddBranchSell(request)
-// 	if err != nil {
-// 		fmt.Println("add order error", err)
-// 		utils.ResponseErrorGin(ctx, "add order error")
-// 		return
-// 	}
-
-// 	fmt.Println("add success")
-// 	utils.ResponseSuccess(ctx, resp)
-// }
-
-// func (c Controller) AddOrder(ctx *gin.Context) {
-// 	var request dtos.AddOrderRequest
-
-// 	//  var request dtos.AddOrderNewRequest
-// 	bytes, err := ioutil.ReadAll(ctx.Request.Body)
-// 	if err != nil {
-// 		fmt.Println("get raw body ADD ORDER error", err)
-// 		utils.ResponseErrorGin(ctx, "get raw body error")
-// 		return
-// 	}
-
-// 	err = json.Unmarshal(bytes, &request)
-// 	if err != nil {
-// 		fmt.Println("bind json ADD ORDER error", err, "raw_body", string(bytes))
-// 		utils.ResponseErrorGin(ctx, "bind json error")
-// 		return
-// 	}
-// 	resp, err := c.OrderService.AddOrder(request)
 // 	if err != nil {
 // 		fmt.Println("add order error", err)
 // 		utils.ResponseErrorGin(ctx, "add order error")

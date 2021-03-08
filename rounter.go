@@ -33,8 +33,8 @@ func InitGin(db *gorm.DB) *gin.Engine {
 	authenService := services.NewAuthenService(authenDao)
 
 	ctl := controllers.Controller{
-		AdScreenService: userService,
-		AuthenService:   authenService,
+		UserService:   userService,
+		AuthenService: authenService,
 	}
 
 	engine := gin.Default()
