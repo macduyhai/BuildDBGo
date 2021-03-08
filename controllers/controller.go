@@ -157,6 +157,19 @@ func (c Controller) AddAuthen(ctx *gin.Context) {
 	utils.ResponseSuccess(ctx, resp)
 }
 
+//Search Authen Key
+func (c Controller) SearchAuthen(ctx *gin.Context) {
+
+	resp, err := c.AuthenService.SearchAuthen()
+	if err != nil {
+		fmt.Println("search orders error", err)
+		utils.ResponseErrorGin(ctx, "search order error")
+		return
+	}
+
+	fmt.Println("search success")
+	utils.ResponseSuccess(ctx, resp)
+}
 func (c Controller) AddUser(ctx *gin.Context) {
 	var request dtos.AddUserRequest
 	//  var request dtos.AddOrderNewRequest
@@ -563,20 +576,6 @@ func (c Controller) AddUser(ctx *gin.Context) {
 // 	}
 
 // 	return result, nil
-// }
-
-// //Search Authen Key
-// func (c Controller) SearchAuthen(ctx *gin.Context) {
-
-// 	resp, err := c.AuthenService.SearchAuthen()
-// 	if err != nil {
-// 		fmt.Println("search orders error", err)
-// 		utils.ResponseErrorGin(ctx, "search order error")
-// 		return
-// 	}
-
-// 	fmt.Println("search success")
-// 	utils.ResponseSuccess(ctx, resp)
 // }
 
 // func (c Controller) SearchSeller(ctx *gin.Context) {
