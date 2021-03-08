@@ -9,7 +9,7 @@ CREATE TABLE `users` (
   `total_size` INT(10)  DEFAULT 0,
   `max_size` INT(10)  DEFAULT 2100,
   `created_at`  DATETIME    DEFAULT NOW(),
-  `deleted_at`                 DATETIME     DEFAULT NULL,
+  `deleted_at`                 DATETIME     DEFAULT NULL
 
 );
 
