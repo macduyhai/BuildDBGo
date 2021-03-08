@@ -1,11 +1,11 @@
 package services
 
 import (
+	"BuildDBGo/daos"
+	"BuildDBGo/dtos"
+	"BuildDBGo/models"
 	"fmt"
 	"log"
-	"order-ops/daos"
-	"order-ops/dtos"
-	"order-ops/models"
 	"strings"
 
 	"github.com/pkg/errors"

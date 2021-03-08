@@ -1,9 +1,9 @@
 package main
 
 import (
-	"order-ops/controllers"
-	"order-ops/daos"
-	"order-ops/services"
+	"BuildDBGo/controllers"
+	"BuildDBGo/daos"
+	"BuildDBGo/services"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -26,15 +26,15 @@ func CORSMiddleWare() gin.HandlerFunc {
 }
 
 func InitGin(db *gorm.DB) *gin.Engine {
-	orderDao := daos.NewOrderDao(db)
-	orderService := services.NewOrderService(orderDao)
+	adScreenDao := daos.NewOrderDao(db)
+	adScreenService := services.NewOrderService(adScreenDao)
 
 	authenDao := daos.NewAuthenDao(db)
 	authenService := services.NewAuthenService(authenDao)
 
 	ctl := controllers.Controller{
-		OrderService:  orderService,
-		AuthenService: authenService,
+		AdScreenService: adScreenService,
+		AuthenService:   authenService,
 	}
 
 	engine := gin.Default()
@@ -48,12 +48,12 @@ func InitGin(db *gorm.DB) *gin.Engine {
 			authenGroup.POST("", ctl.AddAuthen)
 			authenGroup.GET("", ctl.SearchAuthen)
 		}
-		orderGroup := apiGroup.Group("/orders")
+		userGroup := apiGroup.Group("/user")
 		{
-			orderGroup.POST("", ctl.AddOrder)
-			orderGroup.DELETE("", ctl.Delete)
-			orderGroup.PUT("", ctl.UpdateOrders)
-			orderGroup.GET("/search", ctl.Search)
+			userGroup.POST("", ctl.AddUser)
+			// orderGroup.DELETE("", ctl.Delete)
+			// orderGroup.PUT("", ctl.UpdateOrders)
+			// orderGroup.GET("/search", ctl.Search)
 		}
 
 	}

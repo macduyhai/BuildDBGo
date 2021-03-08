@@ -1,9 +1,9 @@
 package services
 
 import (
-	"order-ops/daos"
-	"order-ops/dtos"
-	"order-ops/models"
+	"BuildDBGo/daos"
+	"BuildDBGo/dtos"
+	"BuildDBGo/models"
 )
 
 type AuthenService interface {

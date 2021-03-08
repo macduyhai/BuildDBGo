@@ -1,16 +1,16 @@
 package controllers
 
 import (
+	"BuildDBGo/dtos"
+	"BuildDBGo/services"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"order-ops/dtos"
-	"order-ops/services"
 	"strings"
 	"time"
 
-	"order-ops/utils"
+	"BuildDBGo/utils"
 
 	"github.com/gin-gonic/gin"
 )

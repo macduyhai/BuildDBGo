@@ -1,8 +1,8 @@
 FROM golang:1.14 as builder
 
-WORKDIR /app_order
+WORKDIR /app_adscreen
 
-COPY . /app_order
+COPY . /app_adscreen
 
 RUN go mod download
 
@@ -12,11 +12,11 @@ RUN go build -o main
 
 FROM ubuntu:16.04
 
-WORKDIR /app_order
+WORKDIR /app_adscreen
 
-COPY --from=builder /app_order/main .
+COPY --from=builder /app_adscreen/main .
 
 EXPOSE 80
 ENV SET_CONTAINER_TIMEZONE false
 ENV CONTAINER_TIMEZONE Asia/Ho_Chi_Minh
-CMD ["/app_order/main"]
+CMD ["/app_adscreen/main"]

@@ -1,8 +1,8 @@
 package main
 
 import (
+	"BuildDBGo/config"
 	"fmt"
-	"order-ops/config"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"

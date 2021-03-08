@@ -9,10 +9,10 @@ services:
         - golang:1.12
     depends_on:
       - mysql
-    image: order-ops-hapyc:v1.0.0
+    image: advert_screen:v1.0.0
     restart: always
     ports:
-      - "8086:80"
+      - "8089:80"
     healthcheck:
       test: ["CMD", "curl", "-X", "GET", "http://localhost/ping"]
       interval: 1m30s
@@ -20,28 +20,28 @@ services:
       retries: 3
       start_period: 40s
     environment:
-      - MYSQL_CONNECT_URL=root:bW90aGVyIGZ1Y2tlciBub29i@tcp(mysql:3306)/orders?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=True&loc=Local
+      - MYSQL_CONNECT_URL=root:bW90aGVyIGZ1Y2tlciBub29i@tcp(mysql:3306)/adscreen?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=True&loc=Local
     networks:
-      - backend_order
+      - backend_advert
   mysql:
     image: mysql:5.7
     restart: always
-    container_name: mysql-order
+    container_name: mysql-advert
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data_adscreen:/var/lib/mysql
     networks:
-      - backend_order
+      - backend_advert
     ports:
       - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: bW90aGVyIGZ1Y2tlciBub29i
-      MYSQL_DATABASE: orders
-      MYSQL_USER: user1
+      MYSQL_DATABASE: adscreen
+      MYSQL_USER: user_ad
       MYSQL_PASSWORD: 1
 volumes:
-  db_data:
-    name: order_mysql
+  db_data_adscreen:
+    name: adscreen_mysql
     external: true
 networks:
-  backend_order:
+  backend_advert:
     driver: bridge

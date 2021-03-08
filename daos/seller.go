@@ -1,8 +1,8 @@
 package daos
 
 import (
-	"order-ops/dtos"
-	"order-ops/models"
+	"BuildDBGo/dtos"
+	"BuildDBGo/models"
 
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"

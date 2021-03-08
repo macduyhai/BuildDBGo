@@ -1,4 +1,4 @@
-module order-ops
+module BuildDBGo
 
 go 1.14
 
